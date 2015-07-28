@@ -11,12 +11,13 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<mule.version>3.6.0-M2</mule.version>
+		<mule.version>3.7.0</mule.version>
 		<eclipsePluginVersion>2.8</eclipsePluginVersion>
-		<jdkName>JavaSE-1.6</jdkName>
-		<jdk.version>1.6</jdk.version>
+		<jdkName>JavaSE-1.7</jdkName>
+		<jdk.version>1.7</jdk.version>
 		<junit.version>4.9</junit.version>
-	</properties>
+	<munit.version>3.7.0-RC1</munit.version>
+    </properties>
 
 	<build>
 		<!-- Use a newer version of the install plugin than what your Maven uses 
@@ -43,7 +44,7 @@
 									<pluginExecutionFilter>
 										<groupId>org.mule.tools</groupId>
 										<artifactId>maven-mule-plugin</artifactId>
-										<versionRange>[1.6,)</versionRange>
+										<versionRange>[1.7,)</versionRange>
 										<goals>
 											<goal>attach-test-resources</goal>
 											<goal>filter-resources		</goal>
@@ -191,8 +192,30 @@
                     </execution>
                 </executions>
             </plugin>
-		</plugins>
-	</build>
+		<plugin>
+                <groupId>org.mule.munit.tools</groupId>
+                <artifactId>munit-maven-plugin</artifactId>
+                <version>${munit.version}</version>
+                <executions>
+                    <execution>
+                        <id>test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+	<testResources>
+            <testResource>
+                <directory>src/test/munit</directory>
+            </testResource>
+        <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+        </testResources>
+    </build>
 
 	<!-- plugins for creating site reports -->
 	<reporting>
@@ -403,7 +426,37 @@
 			<version>${mule.version}</version>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+	<dependency>
+            <groupId>org.mule.munit</groupId>
+            <artifactId>munit-assert</artifactId>
+            <version>${munit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    <dependency>
+            <groupId>org.mule.munit</groupId>
+            <artifactId>munit-mock</artifactId>
+            <version>${munit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    <dependency>
+            <groupId>org.mule.munit</groupId>
+            <artifactId>munit-common</artifactId>
+            <version>${munit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    <dependency>
+            <groupId>org.mule.munit</groupId>
+            <artifactId>munit-runner</artifactId>
+            <version>${munit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    <dependency>
+            <groupId>org.mule.modules</groupId>
+            <artifactId>mule-interceptor-module</artifactId>
+            <version>${munit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 	<repositories>
           <repository>
